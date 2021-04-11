@@ -18,7 +18,7 @@ public class Table {
     }
 
     public Object[][] getArray() throws FileNotFoundException {
-        if (array==null){
+
             WorkFile file = new WorkFile();
             ArrayList<Users> arrayList = file.toReadUsers();
 
@@ -29,7 +29,7 @@ public class Table {
                     else array[i][j] = arrayList.get(i).geteMail();
                 }}
             setArray(array);
-        }
+
         return array;
     }
 

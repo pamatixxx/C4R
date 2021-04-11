@@ -51,6 +51,10 @@ public class Gui extends JFrame {
                 message = "Данные успешно добавлены!";
                 mail.setText("");
                 name.setText("");
+              //  jScrollPane.revalidate();// не работает
+              // jScrollPane.updateUI(); //не работает
+             //  table1.updateUI();//не работает
+
             }
 
             JOptionPane.showMessageDialog(null,
