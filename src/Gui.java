@@ -14,7 +14,7 @@ public class Gui extends JFrame {
     private JLabel inputname = new JLabel(" Input your name : ");
     private JLabel inputmail = new JLabel(" Input your e-mail : ");
     private JTextField mail = new JTextField("", 3);
-
+    private JScrollPane jScrollPane = new JScrollPane(table1);
 
     public Gui() throws FileNotFoundException {
         super("Good jobs");
@@ -25,7 +25,8 @@ public class Gui extends JFrame {
         Container container = this.getContentPane();
 
         container.setLayout(new GridLayout(6, 3, 2, 2));
-        container.add(new JScrollPane(table1));
+
+        container.add(jScrollPane);
         container.add(inputname);
         container.add(name);
         container.add(inputmail);
@@ -48,6 +49,8 @@ public class Gui extends JFrame {
             if (message.equals("check")){
                 new WorkFile().toSaveUsers(users);
                 message = "Данные успешно добавлены!";
+                mail.setText("");
+                name.setText("");
             }
 
             JOptionPane.showMessageDialog(null,
