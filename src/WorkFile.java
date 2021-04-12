@@ -1,29 +1,28 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-
+//Работа с локальным файлом, загрузка данных для наполнения таблицы и обратное, запись из таблицы в файл.
 public class WorkFile {
 
-    public String toSaveUsers(Users users) {
+
+    public String saveUser(User user) {
         try {
-            File file = new File("D:\\\\C4R2.txt");
+            File file = new File("C4R2.txt");
             FileOutputStream fos = new FileOutputStream(file, true);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(users);
+            oos.writeObject(user);
             oos.close();
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "Пользователь успешно сохранен.";
+
+        return "Пользователь успешно сохранен."; // user was added successfully
     }
 
 
-    public ArrayList<Users> toReadUsers() throws FileNotFoundException {
-        File file = new File("D:\\\\C4R2.txt");
+    public ArrayList<User> toReadUser() { // readUsers -> на этот раз с s
+        File file = new File("C4R2.txt");
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -31,22 +30,32 @@ public class WorkFile {
                 e.printStackTrace();
             }
         }
-        FileInputStream fis = new FileInputStream("D:\\\\C4R2.txt");
-        ArrayList<Users> objectsList = new ArrayList<>();
-        boolean cont = true;
-        while (cont) {
+
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream("C4R2.txt");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        ArrayList<User> objectsList = new ArrayList<>();
+//        boolean cont = true;
+//        while (cont) {
+        ObjectInputStream input;
+        Object obj;
+        while (true) {
             try {
-                ObjectInputStream input = new ObjectInputStream(fis);
-                Object obj = input.readObject();
+                input = new ObjectInputStream(fis);
+                obj = input.readObject();
                 if (obj != null) {
-                    objectsList.add((Users) obj);
+                    objectsList.add((User) obj);
                 } else {
-                    cont = false;
+                    break;
                 }
             } catch (Exception e) {
                 break;
             }
         }
+
         return objectsList;
     }
 

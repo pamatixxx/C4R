@@ -6,25 +6,23 @@ public class Validation {
     private static final String NAME_PATTERN = "[a-zA-Z]+(\\s)?+[a-zA-Z]+(\\s)?+[a-zA-Z]+(\\s)?+[a-zA-Z]+(\\s)?";
 
 
-    public String validationUsers(Users users) {
-        String massage = "";
+    public String validationUsers(User user) { // validate User
 
         Pattern mail = Pattern.compile(EMAIL_PATTERN);
-        Matcher m = mail.matcher(users.geteMail());
+        Matcher matcherMail = mail.matcher(user.geteMail());
 
         Pattern name = Pattern.compile(NAME_PATTERN);
-        Matcher mm = name.matcher(users.getName());
+        Matcher matcherName = name.matcher(user.getName());
 
-
-        if (m.matches()!=true){
-            massage+="e-mail не соответствует условию. \\n";
+        if (!matcherMail.matches()) {
+            return "e-mail не соответствует условию. \\n"; // incorrect email input
         }
-        else if (mm.matches()!=true){
-            massage+="name не соответствует условию. \\n";
+
+        if (!matcherName.matches()) {
+            return "name не соответствует условию. \\n"; // incorrect name input
         }
-        else massage += "check";
 
+        return "check";
 
-        return massage;
     }
 }

@@ -1,9 +1,16 @@
+import java.awt.*;
 import java.io.FileNotFoundException;
 
 public class Main {
 
-    public static void main(String[] args) throws FileNotFoundException {
-        Gui app = new Gui();
-       app.setVisible(true);
+    public static void main(String[] args) {
+        Window appWindow = null;
+        try {
+            appWindow = new Window();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        appWindow.setVisible(true);
     }
 }

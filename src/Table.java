@@ -1,12 +1,17 @@
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+//Создание таблицы для окна Window
 public class Table {
 
     // Заголовки столбцов
-    private Object[] columnsHeader = new String[]{"name", "e-mail"};
+    private Object[] columnsHeader;
     //массив пользователей для отображения
-    private Object[][] array ;
+    private Object[][] array;
+
+    public Table(String[] strings) {
+        this.columnsHeader = strings;
+    }
 
 
     public Object[] getColumnsHeader() {
@@ -17,18 +22,26 @@ public class Table {
         this.columnsHeader = columnsHeader;
     }
 
-    public Object[][] getArray() throws FileNotFoundException {
 
-            WorkFile file = new WorkFile();
-            ArrayList<Users> arrayList = file.toReadUsers();
+    public Object[][] getArray() {
 
-            Object[][] array = new String[arrayList.size()][getColumnsHeader().length];
-            for (int i = 0; i< arrayList.size();i++){
-                for (int j = 0 ; j <getColumnsHeader().length;j++){
-                    if (j==0)array[i][j] = arrayList.get(i).getName();
-                    else array[i][j] = arrayList.get(i).geteMail();
-                }}
-            setArray(array);
+        WorkFile file = new WorkFile();
+        ArrayList<User> arrayList = null;
+        arrayList = file.toReadUser();
+
+        Object[][] array = new String[arrayList.size()][getColumnsHeader().length];
+
+        //Иницилизация массива для работы таблицы, привидение к типу для работы таблицы.
+        for (int i = 0; i < arrayList.size(); i++) {
+            for (int j = 0; j < getColumnsHeader().length; j++) {
+                if (j == 0) { //если первый элемент записываем в 1-ю ячейку таблицы
+                    array[i][j] = arrayList.get(i).getName();
+                } else { //иначе записываем во вторую ячейку таблицы
+                    array[i][j] = arrayList.get(i).geteMail();
+                }
+            }
+        }
+        this.array = array;
 
         return array;
     }
