@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,7 +8,9 @@ import java.io.FileNotFoundException;
 public class Gui extends JFrame {
 
     private Table table = new Table();
-    private JTable table1 = new JTable(table.getArray(), table.getColumnsHeader());
+    private DefaultTableModel model = new DefaultTableModel();
+    private JTable table1 = new JTable( model);
+
 
     private JButton button = new JButton("Subbmit");
     private JTextField name = new JTextField("", 0); //text то что будет внутри контейнера  для ввода написано
@@ -26,6 +29,21 @@ public class Gui extends JFrame {
 
         container.setLayout(new GridLayout(6, 3, 2, 2));
 
+        //Заменить в дальнейшем
+        Object[] columnsHeader = table.getColumnsHeader();
+        Object[][] array = table.getArray();
+
+        //добавление колонок
+        for (int i = 0; i < columnsHeader.length;i++){
+            model.addColumn(columnsHeader[i]);
+        }
+        //добавление полей
+        for (int i = 0; i < array.length;i++){
+            model.addRow(array[i]);
+        }
+
+
+
         container.add(jScrollPane);
         container.add(inputname);
         container.add(name);
@@ -41,19 +59,17 @@ public class Gui extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Users users = new Users(name.getText(),mail.getText());
+            Users users = new Users(name.getText(), mail.getText());
             Validation validationUsers = new Validation();
             String message = validationUsers.validationUsers(users);
 
 
-            if (message.equals("check")){
+            if (message.equals("check")) {
                 new WorkFile().toSaveUsers(users);
                 message = "Данные успешно добавлены!";
-                mail.setText("");
-                name.setText("");
-              //  jScrollPane.revalidate();// не работает
-              // jScrollPane.updateUI(); //не работает
-             //  table1.updateUI();//не работает
+                mail.setText(""); //обнуление поля имейл
+                name.setText(""); //обнуление поля имени
+                model.addRow(new Object[]{users.getName(),users.geteMail()}); //добавление заполненых данных
 
             }
 

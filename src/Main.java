@@ -1,6 +1,4 @@
-import javax.swing.*;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 
 public class Main {
 
