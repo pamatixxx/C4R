@@ -1,16 +1,18 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 
 public class WorkFile {
 
-    //сохранение Users
-    public String toSaveUsers (Users users) {
+    public String toSaveUsers(Users users) {
         try {
             File file = new File("D:\\\\C4R2.txt");
-            FileOutputStream fos = new FileOutputStream(file,true);
+            FileOutputStream fos = new FileOutputStream(file, true);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(users);
             oos.close();
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -19,13 +21,22 @@ public class WorkFile {
         return "Пользователь успешно сохранен.";
     }
 
-   //Чтение из файла объектов для таблицы (Users)
-    public ArrayList<Users> toReadUsers () throws FileNotFoundException {
+
+    public ArrayList<Users> toReadUsers() throws FileNotFoundException {
+        File file = new File("D:\\\\C4R2.txt");
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         FileInputStream fis = new FileInputStream("D:\\\\C4R2.txt");
         ArrayList<Users> objectsList = new ArrayList<>();
         boolean cont = true;
         while (cont) {
-            try {ObjectInputStream input = new ObjectInputStream(fis);
+            try {
+                ObjectInputStream input = new ObjectInputStream(fis);
                 Object obj = input.readObject();
                 if (obj != null) {
                     objectsList.add((Users) obj);
@@ -36,6 +47,9 @@ public class WorkFile {
                 break;
             }
         }
-        return  objectsList;
+        return objectsList;
     }
+
 }
+
+
